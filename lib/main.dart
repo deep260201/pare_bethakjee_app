@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'package:pare/constent/constent.dart';
 import 'package:pare/language/languages.dart';
 
 import 'package:pare/screens/subscreens/shplash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 

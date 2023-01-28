@@ -24,6 +24,12 @@ class _LiveDarshScreenState extends State<LiveDarshScreen> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
