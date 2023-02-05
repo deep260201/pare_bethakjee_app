@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pare/constent/constent.dart';
 import 'package:pare/main.dart';
 import 'package:get/get.dart';
+import 'package:pare/screens/subscreens/bhajan/bhajan_list.dart';
 import 'package:pare/screens/subscreens/vachnamrut/vachnamrut_player.dart';
 import 'package:pare/widgets/homepage_widget.dart';
 
@@ -115,7 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 horizontelcard(
                   title: 'Bhajan'.tr,
                   icon: Icons.library_music,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BajanList(),
+                        ));
+                  },
                 ),
                 horizontelcard(
                   title: 'Vachnamrut'.tr,

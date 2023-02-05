@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pare/screens/subscreens/vachnamrut/Data.dart';
 import 'package:pare/screens/subscreens/vachnamrut/vachnamrut_vide_player.dart';
 
@@ -35,6 +34,7 @@ class VvachnamrutPageState extends State<VachnamrutPage> {
                   child: FadeInImage.assetNetwork(
                       placeholder: 'assets/images/loader.gif',
                       placeholderScale: 15,
+                      placeholderFit: BoxFit.scaleDown,
                       fit: BoxFit.fill,
                       imageErrorBuilder: (context, error, stackTrace) =>
                           SizedBox(
