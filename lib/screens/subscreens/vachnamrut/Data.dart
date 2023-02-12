@@ -1,15 +1,4 @@
-class Video {
-  final String? coverUrl;
-  final String? title;
-  final String? duration;
-  final String? videoURL;
-  Video({
-    this.coverUrl,
-    this.title,
-    this.duration,
-    this.videoURL,
-  });
-}
+import 'package:pare/models/v_video_model.dart';
 
 final List<Video> vachnamrut = [
   Video(

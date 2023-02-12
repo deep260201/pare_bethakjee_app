@@ -29,7 +29,7 @@ class _SettingPageState extends State<SettingPage> {
                             )));
               },
               leading: Icon(Icons.language),
-              title: Text('Chnage Laguage'.tr),
+              title: Text('Change Laguage'.tr),
               trailing: Icon(Icons.arrow_forward_ios_rounded),
             )
           ],

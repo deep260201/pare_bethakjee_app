@@ -29,7 +29,7 @@ class Guj {
     'arti': 'આરતી',
 
     //home page
-    'e-Dan Peti': 'ઇ-ડેન પેટી',
+    'e-Dan Peti': 'ઇ-દાન પેટી',
     'Prashad': 'પ્રશાદ',
     'Events': 'પ્રસન્ગ',
     'e-Puja': 'પૂજા',
@@ -38,7 +38,7 @@ class Guj {
     'Vachnamrut': 'વચનામૃત',
 
 // setting
-    'Chnage Laguage': 'ભાષા બદલો',
+    'Change Laguage': 'ભાષા બદલો',
 
     // buttons
     'Next': 'આગળ',

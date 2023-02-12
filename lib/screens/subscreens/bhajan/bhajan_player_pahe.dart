@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:pare/models/audio_duration.dart';
+import 'package:pare/screens/subscreens/bhajan/bhajan_data.dart';
 import 'package:rxdart/rxdart.dart' as rx;
 
 class bhajanPlayer extends StatefulWidget {
-  const bhajanPlayer({super.key});
+  final int index;
+  const bhajanPlayer({super.key, required this.index});
 
   @override
   State<bhajanPlayer> createState() => _bhajanPlayerState();
@@ -16,6 +16,7 @@ class _bhajanPlayerState extends State<bhajanPlayer>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   bool isPlaying = false;
+  int? songIndex;
 
   AudioPlayer _audioPlayer = AudioPlayer();
 
@@ -32,16 +33,18 @@ class _bhajanPlayerState extends State<bhajanPlayer>
 
   @override
   void initState() {
-    setSorce();
+    songIndex = widget.index;
+    setSorce(songIndex!);
 
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
     super.initState();
   }
 
-  setSorce() async {
-    await _audioPlayer.setAsset('assets/audio/Shri_Yamunashtakm.mp3',
+  setSorce(int index) async {
+    await _audioPlayer.setUrl(playlist[index].songUrl,
         initialPosition: Duration(seconds: 0, microseconds: 0));
+    if (mounted) setState(() {});
   }
 
   @override
@@ -78,21 +81,21 @@ class _bhajanPlayerState extends State<bhajanPlayer>
                 height: 200,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5000),
-                  child: Image.network('https://i.imgur.com/I1i8ZDR.jpg'),
+                  child: Image.network(playlist[songIndex!].imageUrl),
                 ),
               ),
               SizedBox(
                 height: 60,
               ),
               Text(
-                "Rocket Queen",
+                playlist[songIndex!].title,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                "Guns N Roses",
+                playlist[songIndex!].artistName,
                 style: TextStyle(),
               ),
               SizedBox(
@@ -105,6 +108,7 @@ class _bhajanPlayerState extends State<bhajanPlayer>
                     var position = positionData?.position ?? Duration.zero;
 
                     var duration = positionData?.duration ?? Duration.zero;
+
                     double count = 0;
                     if (position != Duration.zero) {
                       count = ((position.inSeconds * 100) / duration.inSeconds)
@@ -162,17 +166,43 @@ class _bhajanPlayerState extends State<bhajanPlayer>
                 var position = positionData?.position ?? Duration.zero;
                 var duration = positionData?.duration ?? Duration.zero;
 
+                if (positionData?.position != null) {
+                  if (position.inSeconds == duration.inSeconds) {
+                    if (songIndex! < playlist.length - 1) {
+                      songIndex = songIndex! + 1;
+
+                      setSorce(songIndex!);
+                    }
+                  }
+                }
+
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(
-                          Icons.skip_previous,
-                          color: Color.fromARGB(255, 48, 47, 47),
-                          size: 40,
+                        IgnorePointer(
+                          ignoring: songIndex! > 0 ? false : true,
+                          child: Opacity(
+                            opacity: songIndex! > 0 ? 1 : 0.5,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  songIndex = songIndex! - 1;
+                                });
+                                setSorce(songIndex!);
+                              },
+                              child: Icon(
+                                Icons.skip_previous,
+                                color: Color.fromARGB(255, 48, 47, 47),
+                                size: 40,
+                              ),
+                            ),
+                          ),
                         ),
+
+                        //backrword
                         IconButton(
                             onPressed: () {
                               if (position.inSeconds > 10) {
@@ -183,6 +213,8 @@ class _bhajanPlayerState extends State<bhajanPlayer>
                               }
                             },
                             icon: Icon(Icons.replay_10_sharp)),
+
+                        // puse and play
                         InkWell(
                           onTap: () {
                             _handleOnPressed();
@@ -194,6 +226,8 @@ class _bhajanPlayerState extends State<bhajanPlayer>
                             size: 80,
                           ),
                         ),
+
+                        //forwod
                         IconButton(
                             onPressed: () {
                               if (position.inSeconds < duration.inSeconds) {
@@ -204,10 +238,27 @@ class _bhajanPlayerState extends State<bhajanPlayer>
                               }
                             },
                             icon: Icon(Icons.forward_10_rounded)),
-                        Icon(
-                          Icons.skip_next,
-                          color: Color.fromARGB(255, 48, 47, 47),
-                          size: 40,
+
+                        // next
+                        IgnorePointer(
+                          ignoring:
+                              songIndex! < playlist.length - 1 ? false : true,
+                          child: Opacity(
+                            opacity: songIndex! < playlist.length - 1 ? 1 : 0.5,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  songIndex = songIndex! + 1;
+                                });
+                                setSorce(songIndex!);
+                              },
+                              child: Icon(
+                                Icons.skip_next,
+                                color: Color.fromARGB(255, 48, 47, 47),
+                                size: 40,
+                              ),
+                            ),
+                          ),
                         )
                       ],
                     ),

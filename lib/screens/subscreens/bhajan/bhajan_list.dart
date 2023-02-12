@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pare/screens/subscreens/bhajan/bhajan_data.dart';
 import 'package:pare/screens/subscreens/bhajan/bhajan_player_pahe.dart';
 import 'package:pare/screens/subscreens/vachnamrut/Data.dart';
 import 'package:pare/screens/subscreens/vachnamrut/vachnamrut_vide_player.dart';
@@ -104,14 +105,16 @@ class _BajanListState extends State<BajanList> {
                 children: [
                   // audio
                   ListView.builder(
-                    itemCount: 10,
+                    itemCount: playlist.length,
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => bhajanPlayer()));
+                                  builder: (context) => bhajanPlayer(
+                                        index: index,
+                                      )));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -121,16 +124,16 @@ class _BajanListState extends State<BajanList> {
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(
-                                "https://i.imgur.com/I1i8ZDR.jpg",
+                                playlist[index].imageUrl,
                                 width: 45,
                               ),
                             ),
                             title: Text(
-                              "Rocket Queen",
+                              playlist[index].title,
                               style: TextStyle(),
                             ),
                             subtitle: Text(
-                              "Guns N Roses",
+                              playlist[index].artistName,
                               style: TextStyle(),
                             ),
                             trailing: Icon(

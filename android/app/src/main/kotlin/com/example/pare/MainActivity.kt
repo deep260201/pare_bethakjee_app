@@ -1,4 +1,4 @@
-package com.example.pare
+package com.temple.pare
 
 import io.flutter.embedding.android.FlutterActivity
 
